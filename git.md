@@ -17,7 +17,10 @@
         * 安装图形化界面TortoiseGit(乌龟)：简化使用。
             1. 安装时使用OpenSSH。
             2. 配置指定git目录。
-            3. 创建name和email。
+            3. 创建name和email。(由于分布式的原因)
+                初始化name：git config --global user.name
+                初始化email：git config --global user.email
+                
             4. 可以安装乌龟的汉化包，然后在settings中修改language。
     * 目录介绍：
         .git:本地版本库。（这是一个隐藏文件夹）
@@ -64,6 +67,11 @@
                 生成的忽略文件（.gitigonore）放在文件/文件夹目录下（即工程目录下），需要将忽略文件添加到版本库中
             3. 点击提交到mast，标注日志信息
 
+
+#git工作原理
+
+<img src="./img/img01.png">
+
 # 远程仓库的使用
     * 使用github创建一个远程仓库
         1. 登录github创建一个账号。
@@ -75,7 +83,7 @@
             1. 选择通信协议https或者ssh（后面会生成访问的服务器路径）
             2. 创建一个新的仓库推送到远程
                 * git init                                                                    初始化一个库
-                * git add README.MD                                                           将文件添加到暂存区
+                * git add README.MD                                                           添加一个文件介绍
                 * git commit -m"first commit"                                                 提交到本地仓库
                 * git remote add origin https://github.com/.../...（生成的服务器访问路径）      将本地和远程进行关联
                 * git push -u origin master                                                   将文件推送到远程
@@ -115,6 +123,12 @@
     * 推送修改的文件及冲突解决
         乌龟方式思路:将修改的文件添加到远程仓库，然后在本地的工作区将远程仓库内容拉取下来，更新到本地仓库，可能会出现
                     冲突。
+        
+        冲突：由于两个文件内容版本不一致造成的，可能是不同的人对文件修改有不同内容造成的，也可能是两个分支之间同一个
+              文件的内容不同产生的
+                    
+        冲突解决（手动解决）：将两个产生冲突的文件合并，并且删除git自动生成的符号
+
 
 # git 分支
     * 创建合并分支
@@ -161,53 +175,79 @@
     * 注意：创建远程仓库最好使用https，因为ssh在IDEA中不太好使用
 
 # git 常用命令
+    1. 初始化版本库：git init
 
-        * 在当前目录新建一个Git代码库(初始化库)：$ git init
+    2. 将指定文件添加到暂存区：git add 文件名
 
-        * 下载一个项目（克隆）：$ git clone [url]
+    3. 将修改过和未提交的文件添加到暂存区：git add .
 
-        * 显示当前的Git配置：$ git config --list
+    4. 查看状态:git status
+        * 红色表示在工作区
+        * 绿色表示在暂存区
+        * 没有任何显示表示在版本区
 
-        * 让本地仓库和远程仓库进行关联： git remote add origin 远程仓库服务器路
+    5. 提交暂存区所有文件到版本区：git commit -m "xxx"
 
-        * 查看日志：git log
+    6. 差异对比
+        * 比较暂存区与工作区：git diff
+        * 比较版本区与暂存区：git diff --cached
+        * 比较版本区与工作区：git diff master
 
-        * 添加新文件和编辑过的文件不包括删除的文件到暂存区：git add .
+    7. 查看日志版本号
+        * 显示从最近到最远的所有提交日志：git log           （完整版）
+        * 显示每次提交的commit id：git reflog              （精简版）
 
-        * 表示添加所有内容：git add -A
+    8. 版本回退、版本撤销、版本穿梭
+        * 版本回退（回退一次提交）：git reset --hard HEAD^
+        * 回到指定xxx的commit id 版本：git reset --hard xxx
+        * 用版本库中的文件替换暂存区中的全部文件：git reset HEAD
+        * 用暂存区指定文件替换工作区的指定文件（危险）：git checkout --x.txt
+        * 用版本库中的文件替换暂存区和工作区的文件（危险）：git checkout HEAD x.txt
+        * 从暂存区删除文件：git rm --cached x.txt
 
-        * 添加同时提交内容：git commit -am"添加并提交到仓库"
+    9. 删除文件
+        * 删除文件： git rm x.txt
+        * 删除文件夹： git rm -r xxx
 
-        * 提交到库中：git commit -m"添加文件"
+    10. 分支
+        * 创建dev分支并ie换到dev分支：git checkout -b dev
+        * 查看当前分支：git branch
+        * 切换分支：git checkout 分支名
+        * 合并dev分支到当前分支：git merge dev
+        * 删除指定分支：git branch -d dev
+        * 显示两个分支之间所有有差异的文件的详细差异：git diff branch1 branch2
+        * 显示两个分支之间所有有差异的文件列表：git diff branch1 branch2 --stat
+        * 显示指定文件的详细差异：git diff branch1 branch2 xxx 
 
-        * 显示有变更的文件：$ git status
-
-        * 将本地的工程推送到远程：git push -u origin master     注意：远程是空的，第一次链接需要将-u参数加上
-
-        * 查看分支： git branch
-
-        * 创建分支：git branch <name>
-
-        * 切换分支：git checkout <name>
-
-        * 创建+切换分支：git checkout -b <name>
-
-        * 合并某分支到当前分支：git merge <name>
-
-        * 删除本地分支：git branch -d <name>
-
-        * 查看远程分支列表：git branch -a   注意：绿色代表当前项目所在的分支，红色就是远程分支列表
-
-        * 提交该分支到远程仓库(即：在远程创建dev分支，并提交内容)：git push origin dev
-
-        * 从远程获取dev分支内容：git pull origin dev
-
-        * 删除远程分支：git push origin --delete <branchName>
-
-        * 重命名本地分支：git branch -m <oldbranch name> <newbranch name>
-
-        * 重命名远程分支：先删除远程分支，然后重命名本地分支，再重新提交一个远程分支
-
-        。。。
+    11. 将本地仓库与远程仓库建立联系：git remote add origin URL
     
+    12. 将本地仓库推送到远程：git push -u origin master
+
+    13. 将远程内容拉取：git pull origin master
+
+    14. 克隆文件到本地：git clone URL
     
+# Linux常见的命令
+    * mkdir xxx ：新建文件夹
+
+    * vi x.txt : 新建文件
+        输入i 进入编辑模式
+        ESC + : + wq 保存并退出
+        ESC + : + q! 不保存并退出
+
+    * cd 进入文件夹目录
+
+    * cd.. 返回上一级目录
+
+    * ls 列出当前文件夹中的所有文件
+
+    * pwd 显示当前目录
+
+    * cat x.txt 显示文件内容
+
+    * clear 清屏
+
+# 注意问题
+    1. 如果在推送代码后，电脑不能够记住github的用户名和密码，执行一下命令可以解决：
+        git config --global credential.helper store
+
