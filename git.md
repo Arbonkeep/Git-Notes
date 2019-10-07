@@ -258,6 +258,8 @@
 
     * clear 清屏
 
+    * wget + 文件路径：下载文件 
+
 # 注意问题
     1. 如果在推送代码后，电脑不能够记住github的用户名和密码，执行一下命令可以解决：
         git config --global credential.helper store
