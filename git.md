@@ -264,3 +264,7 @@
     1. 如果在推送代码后，电脑不能够记住github的用户名和密码，执行一下命令可以解决：
         git config --global credential.helper store
 
+    2. 如果在使用git时，遇到文件太大不能够push到github中，那么可以通过以下方式解决
+
+<img src="./img/img02.png">
+
