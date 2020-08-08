@@ -221,14 +221,16 @@
         * 删除文件夹： git rm -r xxx
 
     10. 分支
-        * 创建dev分支并ie换到dev分支：git checkout -b dev
+        * 创建dev分支并且换到dev分支：git checkout -b dev
         * 查看当前分支：git branch
+        * 查看所有分支信息：git branch -avv
         * 切换分支：git checkout 分支名
         * 合并dev分支到当前分支：git merge dev
         * 删除指定分支：git branch -d dev
         * 显示两个分支之间所有有差异的文件的详细差异：git diff branch1 branch2
         * 显示两个分支之间所有有差异的文件列表：git diff branch1 branch2 --stat
         * 显示指定文件的详细差异：git diff branch1 branch2 xxx 
+        
 
     11. 将本地仓库与远程仓库建立联系：git remote add origin URL
     
