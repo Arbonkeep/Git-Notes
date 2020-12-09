@@ -393,5 +393,89 @@
 
         <2> yum install xxx  下载安装
 
+## linux中安装与卸载mysql
 
+### 完全卸载myslq
+    1. 查看本机是否携带mariadb：rpm -qa | grep mariadb
+
+    2. 卸载mariadb： yum -y remove mari*
+
+    3. 删除文件目录： rm -rf /var/lib/mysql/*
+
+    4. 卸载mysql：yum remove mysql-community-server
+
+    5. 查询所有相关的文件：rpm -qa |grep mysql
+
+    6. 将所有相关文件删除： yum remove mysql-*
+
+    7. 查找所有的配置文件：find / -name mysql
+
+    8. 将所有配置文件删除：rm -rvf 文件名
+
+### mysql的安装(centos7环境npm安装)
+    1. 查询本机是否存在mariadb：rpm -qa|grep mariadb
+
+    2. 如果存在执行卸载：rpm -e --nodeps 搜索到的文件名
+
+    3. 检查安装依赖
+        rpm -qa|grep libaio
+        yum install libaio -y
+        rpm -qa|grep net-tools
+        yum install net-tools -y
+    
+    4. 赋予根目录下/,的tmp文件夹读写执行权限
+        chmod -R 777 /tmp
+    
+    5. 依次执行，进行安装
+        rpm -ivh mysql-community-common-5.7.16-1.el7.x86_64.rpm 
+        rpm -ivh mysql-community-libs-5.7.16-1.el7.x86_64.rpm
+        rpm -ivh mysql-community-client-5.7.16-1.el7.x86_64.rpm 
+        rpm -ivh mysql-community-server-5.7.16-1.el7.x86_64.rpm
+    
+    6. 查看版本
+        mysqladmin --version
+
+    7. 以 root 身份运行 mysql 服务，需要执行下面的命令初始化mysql
+        mysqld --initialize --user=mysql
+    
+    8. 查看mysql登录密码：cat /var/log/mysqld.log
+    
+    9. 服务相关命名
+        启动：systemctl start mysqld 
+        状态: systemctl status mysqld
+        关闭：systemctl stop mysqld
+    
+    10. 登录mysql
+        mysql -u root -p (执行后输入查看的密码)
+
+    11. 修改登录密码
+        ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+
+    12. 设置开机启动
+            * 查看mysql是否自启动(默认自启动)
+              systemctl list-unit-files|grep mysqld.service 
+
+            * 运行如下命令设置自启动
+              systemctl enable mysqld
+
+    13. 修改字符集
+        <1> 修改配置文件：vim /etc/my.cnf
+            在配置文件末尾加上以下内容：
+                character_set_server=utf8
+            
+        <2> 修改已经创建的数据库和表的字符集(在mysql中执行，如果是新的mysql还没有创建，不需要此步骤)
+            修改数据库的字符集
+                alter database mydb character set 'utf8';
+            修改数据表的字符集
+                alter table mytbl convert to character set 'utf8';
+
+    14. 配置数据库远程连接，设置权限
+
+        <1> 授权命令： 
+            grant 权限1,权限2,…权限n on 数据库名称.表名称 to 用户名@用户地址 identified by ‘连接口令’;
+
+            grant all privileges on *.* to root@'%' identified by 'root';
+
+        <2> 刷新权限
+                flush privileges;
 
