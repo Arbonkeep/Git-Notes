@@ -476,6 +476,10 @@
 
             grant all privileges on *.* to root@'%' identified by 'root';
 
+	    其中*.* 的第一个*表示所有数据库名，第二个*表示所有的数据库表root@'%' 中的root表示用户名
+	    %表示所有ip地址，%也可以指定具体的ip地址，比如root@localhost，root@192.168.10.129
+
+
         <2> 刷新权限
                 flush privileges;
 
