@@ -280,3 +280,28 @@
 
     3. 解决冲突后，直接重新git add . ,git commit , git push 即可提交成功
 ​    
+## 真实开发环境中的使用git开发流程
+
+    1. 首先，在远程仓库github或者gitee中创建一个仓库(实际开发中不需要自己创建)
+        
+        <1> 创建仓库如下所示
+
+<img src="./img/img09.png" width = 800px>
+
+
+    2. 其次，使用idea将远程仓库中的内容clone下来，进行修改即可
+        <1> clone远程代码并创建工程
+
+<img src="./img/img13.png" width = 800px>
+
+        <2> 添加到本地，并push
+
+<img src="./img/img10.png" width = 800px>
+
+        <3> 提交时，设置相关内容，并选择push到远程
+
+<img src="./img/img11.png" width = 800px>
+
+        <4> 推送到远程
+
+<img src="./img/img12.png" width = 800px>
