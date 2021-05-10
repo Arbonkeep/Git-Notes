@@ -228,6 +228,7 @@
     10. 分支
         * 创建dev分支并且换到dev分支：git checkout -b dev
         * 查看当前分支：git branch
+        * 查看远程分支: git branch -r
         * 查看所有分支信息：git branch -avv
         * 切换分支：git checkout 分支名
         * 合并dev分支到当前分支：git merge dev
@@ -244,6 +245,23 @@
     13. 将远程内容拉取：git pull origin master
     
     14. 克隆文件到本地：git clone URL
+
+    15. git stash:将所有未提交的的修改（工作区和暂存区）保存在堆栈中，用于后续恢复当前目录
+
+        git stash save: 与上面的功能一致，但是可以添加一些说明
+
+        git stash list: 查看当前stash中的所有内容
+
+        git stash pop: 将stash中的内容弹出应用到当前分支的工作目录中,同时会将stash内容删除
+
+        git stash apply: 将stash中的内容弹出应用到当前分支的工作目录中，不会删除stash内容
+
+        git stash clear: 清除所有stash的内容 
+
+        git stash show: 查看当前最新保存的stash和当前目录的差异，加上-p查看详细内容
+
+        git stash branch: 从stash创建分支
+
 
 ## 注意问题
     1. 如果在推送代码后，电脑不能够记住github的用户名和密码，执行一下命令可以解决：
@@ -305,3 +323,9 @@
         <4> 推送到远程
 
 <img src="./img/img12.png" width = 800px>
+
+    3. 注意事项
+        <1> 提交代码的时机
+
+<img src="./img/img14.png" width = 800px>
+ 
